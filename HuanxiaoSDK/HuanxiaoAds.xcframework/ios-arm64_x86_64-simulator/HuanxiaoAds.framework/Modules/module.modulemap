@@ -1,0 +1,6 @@
+framework module HuanxiaoAds {
+  umbrella header "HuanxiaoAds.h"
+  export *
+
+  module * { export * }
+}
