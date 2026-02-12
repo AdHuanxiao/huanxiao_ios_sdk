@@ -13,10 +13,6 @@ FOUNDATION_EXPORT double HuanxiaoAdsVersionNumber;
 //! SDK 版本号 (字符串)
 FOUNDATION_EXPORT const unsigned char HuanxiaoAdsVersionString[];
 
-// ============================================================================
-// 公开头文件
-// ============================================================================
-
 #pragma mark - 核心模块
 
 /// SDK 常量定义（错误码、状态码、日志级别）
@@ -47,7 +43,8 @@ FOUNDATION_EXPORT const unsigned char HuanxiaoAdsVersionString[];
 #import <HuanxiaoAds/HXNativeAdDelegate.h>
 #import <HuanxiaoAds/HXNativeAd.h>
 #import <HuanxiaoAds/HXNativeAd+Internal.h>
-
+#import <HuanxiaoAds/HXNativeAdRenderData.h>
+#import <HuanxiaoAds/HXNativeAdCustomViews.h>
 // 激励视频广告
 #import <HuanxiaoAds/HXRewardVideoAdDelegate.h>
 #import <HuanxiaoAds/HXRewardVideoAd.h>

@@ -60,6 +60,22 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - 初始化
 
 /**
+ * @brief 使用 AppID 初始化 SDK
+ *
+ * @param appID 应用 ID（必填）
+ * @param completion 初始化完成回调（主线程）
+ *   - success: 是否成功
+ *   - error: 失败时的错误信息
+ *
+ * @discussion
+ * 使用默认配置初始化 SDK，适用于不需要自定义配置的场景。
+ * 等同于使用默认 HXAdsConfig 调用 initializeWithConfig:completion:
+ */
+- (void)initializeWithAppID:(NSString *)appID
+                 completion:(nullable HXAdsInitializationCompletionHandler)completion;
+
+
+/**
  * @brief 初始化 SDK
  *
  * @param config SDK 配置对象，包含 AppID 和隐私设置
@@ -74,24 +90,10 @@ NS_ASSUME_NONNULL_BEGIN
  * - 初始化过程中会进行网络请求，请确保网络可用
  *
  * @warning AppID 为必填项，为空时将返回错误
- *
- * @code
- * HXAdsConfig *config = [[HXAdsConfig alloc] initWithAppID:@"YOUR_APP_ID"];
- * config.testMode = YES;
- * config.privacyConfig.personalizedAdEnabled = YES;
- *
- * [[HXAdsSDK sharedInstance] initializeWithConfig:config completion:^(BOOL success, NSError *error) {
- *     if (success) {
- *         // 初始化成功，可以开始请求广告
- *     } else {
- *         // 处理错误
- *         NSLog(@"初始化失败: %@", error.localizedDescription);
- *     }
- * }];
- * @endcode
  */
 - (void)initializeWithConfig:(HXAdsConfig *)config
                   completion:(nullable HXAdsInitializationCompletionHandler)completion;
+
 
 #pragma mark - 隐私设置
 

@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief SDK 版本号
  * @discussion 格式: 主版本.次版本.修订版本
  */
-static NSString * const HXAdsSDKVersion = @"1.0.0";
+static NSString * const HXAdsSDKVersion = @"1.7.0";
 
 /**
  * @brief SDK 错误域
@@ -162,6 +162,12 @@ typedef NS_ENUM(NSInteger, HXAdsErrorCode) {
      * @discussion 当前广告模板类型不被支持（如视频模板暂未实现）
      */
     HXAdsErrorCodeTemplateNotSupported = 3009,
+    
+    /**
+     * @brief 广告类型不匹配
+     * @discussion 返回的广告类型与请求的广告位类型不一致
+     */
+    HXAdsErrorCodeAdTypeMismatch = 3010,
     
     /**
      * @brief 内部错误

@@ -55,6 +55,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
+#pragma mark - 视频控制
+
+/**
+ * @brief 视频是否静音播放
+ *
+ * @discussion
+ * 设置视频广告的静音状态。
+ * 可在 loadAd 之前设置，广告加载后也可动态修改。
+ *
+ * @default NO（默认有声播放）
+ */
+@property (nonatomic, assign) BOOL videoMuted;
+
 #pragma mark - 广告操作
 
 /**
