@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>openapp.jdmobile</string>
+		<string>tbopen</string>
+		<string>tmall</string>
+		<string>alipays</string>
+		<string>pinduoduo</string>
+		<string>imeituan</string>
+		<string>meituanwaimai</string>
+		<string>ctrip</string>
+		<string>uclink</string>
+		<string>qklink</string>
+		<string>baiduboxapp</string>
+		<string>taobaotravel</string>
+		<string>autohome</string>
+		<string>wireless1688</string>
+		<string>amapuri</string>
+		<string>eleme</string>
+		<string>kwai</string>
+		<string>ksnebula</string>
+		<string>OneTravel</string>
+		<string>bilibili</string>
+		<string>dianping</string>
+		<string>sinaweibo</string>
+		<string>vipshop</string>
+		<string>dydeeplink</string>
+		<string>kfcapplinkurl</string>
+		<string>txvideo</string>
+		<string>snssdk1128</string>
+		<string>lianjiabeike</string>
+		<string>suning</string>
+		<string>qqnews</string>
+		<string>qmkege</string>
+		<string>zhihu</string>
+		<string>iqiyi</string>
+		<string>wbmain</string>
+		<string>fleamarket</string>
+		<string>youku</string>
+		<string>snssdk35</string>
+		<string>qqmusic</string>
+		<string>openanjuke</string>
+		<string>iting</string>
+		<string>jdmobile</string>
+		<string>travelguide</string>
+		<string>qunarphone</string>
+		<string>tctclient</string>
+		<string>koubei</string>
+		<string>taobaoliveshare</string>
+		<string>cmblife</string>
+		<string>market</string>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+    <key>NSUserTrackingUsageDescription</key>
+    <string>该标识符将用于向您推送个性化广告</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>获取位置信息用于为您推荐附近的优质服务</string>
+
+</dict>
+</plist>

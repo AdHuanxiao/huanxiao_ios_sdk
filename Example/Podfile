@@ -1,0 +1,17 @@
+# Uncomment the next line to define a global platform for your project
+workspace 'HuanxiaoAdsExample.xcworkspace'
+platform :ios, '13.0'
+
+target 'HuanxiaoAdsExample' do
+  project './HuanxiaoAdsExample/HuanxiaoAdsExample.xcodeproj'
+  use_frameworks!
+  pod 'HuanxiaoSDK'
+end
+
+
+target 'HuanxiaoAdsExample-Swift' do
+  project './HuanxiaoAdsExample-Swift/HuanxiaoAdsExample-Swift.xcodeproj'
+  use_frameworks!
+  pod 'HuanxiaoSDK'
+end
+
