@@ -1,0 +1,6 @@
+framework module HuanxiaoAdsCSJAdapterSDK {
+  umbrella header "HuanxiaoAdsCSJAdapterSDK.h"
+  export *
+
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module HuanxiaoAdsAwmAdapterSDK {
+  umbrella header "HuanxiaoAdsAwmAdapterSDK.h"
+  export *
+
+  module * { export * }
+}
