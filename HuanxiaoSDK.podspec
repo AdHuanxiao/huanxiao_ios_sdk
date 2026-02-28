@@ -48,7 +48,12 @@ Pod::Spec.new do |spec|
     ss.vendored_frameworks = 'HuanxiaoSDK/HuanxiaoAdsAwmAdapterSDK.xcframework'
     ss.dependency 'HuanxiaoSDK/Core'
     ss.dependency 'ToBid-iOS', '<=4.7.1'
-    
+    ss.pod_target_xcconfig = {
+      'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
+    }
+    ss.user_target_xcconfig = {
+      'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
+    }
   end
   
 end
