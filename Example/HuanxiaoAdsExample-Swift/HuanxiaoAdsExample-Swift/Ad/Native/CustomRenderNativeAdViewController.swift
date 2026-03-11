@@ -231,7 +231,7 @@ class CustomRenderNativeAdViewController: UIViewController {
             imageHeight = containerWidth * 9.0 / 16.0 // 16:9 比例
             
             // 静音按钮
-            isMuted = data.videoMuted
+            isMuted = true
             let mute = UIButton(type: .custom)
             mute.backgroundColor = UIColor(white: 0, alpha: 0.5)
             mute.layer.cornerRadius = 16
@@ -260,15 +260,15 @@ class CustomRenderNativeAdViewController: UIViewController {
             mainImage.contentMode = .scaleAspectFill
             mainImage.clipsToBounds = true
             mainImage.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
-            mainImage.image = data.mainImage
+            mainImage.image = data.images.first as? UIImage
             mainImage.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(mainImage)
             mainImageView = mainImage
             topView = mainImage
             
             // 计算图片高度
-            if data.imageRatio > 0 {
-                imageHeight = containerWidth / data.imageRatio
+            if data.width > 0 && data.height > 0 {
+                imageHeight = containerWidth * CGFloat(data.height) / CGFloat(data.width)
             } else {
                 imageHeight = containerWidth * 9.0 / 16.0
             }
@@ -298,16 +298,11 @@ class CustomRenderNativeAdViewController: UIViewController {
         badgeContainer.addSubview(badgeIcon)
         adBadgeIconView = badgeIcon
         
-        // 设置图标：优先使用 SDK 返回的图标，否则使用系统图标
-        if let icon = data.adBadgeIcon {
-            badgeIcon.image = icon
-        } else {
-            badgeIcon.image = UIImage(systemName: "info.circle.fill")
-        }
+        badgeIcon.image = data.adLabelImage ?? UIImage(systemName: "info.circle.fill")
         
         // 广告标识文字
         let badgeLabel = UILabel()
-        badgeLabel.text = data.adBadgeText.isEmpty ? "广告" : data.adBadgeText
+        badgeLabel.text = data.adLabel.isEmpty ? "广告" : data.adLabel
         badgeLabel.font = .systemFont(ofSize: 10, weight: .medium)
         badgeLabel.textColor = .white
         badgeLabel.textAlignment = .center
@@ -339,32 +334,19 @@ class CustomRenderNativeAdViewController: UIViewController {
         contentView.addSubview(close)
         closeButton = close
         
-        // 交互提示（如果有）
-        if let hintText = data.interactionHintText, !hintText.isEmpty {
-            let hintView = UIView()
-            hintView.backgroundColor = UIColor(white: 0, alpha: 0.6)
-            hintView.layer.cornerRadius = 4
-            hintView.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(hintView)
-            interactionHintView = hintView
-            
-            let hintLabel = UILabel()
-            hintLabel.text = hintText
-            hintLabel.font = .systemFont(ofSize: 12)
-            hintLabel.textColor = .white
-            hintLabel.translatesAutoresizingMaskIntoConstraints = false
-            hintView.addSubview(hintLabel)
-            interactionHintLabel = hintLabel
-            
+        // 摇一摇/扭一扭动画视图（SDK 提供）
+        if let shakeView = data.shakeAnimationView {
+            shakeView.translatesAutoresizingMaskIntoConstraints = false
+            shakeView.layer.cornerRadius = 27.5
+            shakeView.clipsToBounds = true
+            contentView.addSubview(shakeView)
             NSLayoutConstraint.activate([
-                hintView.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -12),
-                hintView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-                
-                hintLabel.topAnchor.constraint(equalTo: hintView.topAnchor, constant: 6),
-                hintLabel.bottomAnchor.constraint(equalTo: hintView.bottomAnchor, constant: -6),
-                hintLabel.leadingAnchor.constraint(equalTo: hintView.leadingAnchor, constant: 12),
-                hintLabel.trailingAnchor.constraint(equalTo: hintView.trailingAnchor, constant: -12),
+                shakeView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
+                shakeView.centerYAnchor.constraint(equalTo: topView.centerYAnchor),
+                shakeView.widthAnchor.constraint(equalToConstant: 55),
+                shakeView.heightAnchor.constraint(equalToConstant: 55),
             ])
+            shakeView.startAnimating()
         }
         
         // 底部信息区
@@ -378,7 +360,7 @@ class CustomRenderNativeAdViewController: UIViewController {
         icon.clipsToBounds = true
         icon.layer.cornerRadius = 6
         icon.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
-        icon.image = data.iconImage ?? data.appIcon
+        icon.image = data.images.count > 1 ? (data.images[1] as? UIImage) : (data.images.first as? UIImage)
         icon.translatesAutoresizingMaskIntoConstraints = false
         infoView.addSubview(icon)
         iconImageView = icon
@@ -395,7 +377,7 @@ class CustomRenderNativeAdViewController: UIViewController {
         
         // 描述
         let desc = UILabel()
-        desc.text = data.desc
+        desc.text = data.texts.first as? String
         desc.font = .systemFont(ofSize: 13)
         desc.textColor = UIColor(white: 0.5, alpha: 1.0)
         desc.numberOfLines = 2
@@ -494,28 +476,31 @@ extension CustomRenderNativeAdViewController: HXNativeAdDelegate {
             return
         }
         
-        print("[CustomRenderNativeAd] 渲染数据: title=\(renderData.title ?? ""), desc=\(renderData.desc ?? ""), isVideoAd=\(renderData.isVideoAd), interactionType=\(renderData.interactionType)")
+        print("[CustomRenderNativeAd] 渲染数据: title=\(renderData.title ?? ""), isVideoAd=\(renderData.isVideoAd), width=\(renderData.width), height=\(renderData.height)")
         
         // 构建自渲染 UI
         buildCustomAdView(with: renderData)
         
-        // 绑定视图给 SDK
-        let customViews = HXNativeAdCustomViews()
-        customViews.titleLabel = titleLabel
-        customViews.descLabel = descLabel
-        customViews.mainImageView = mainImageView
-        customViews.iconImageView = iconImageView
-        customViews.actionButton = ctaButton
-        customViews.adBadgeView = adBadgeContainer        // 合规必须
-        customViews.interactionHintView = interactionHintView
-        customViews.closeButton = closeButton
-        customViews.clickableView = customAdView         // 整个广告区域可点击
-        
-        if renderData.isVideoAd {
-            customViews.videoContainerView = videoContainerView
+        // 视频广告：将 SDK 提供的 mediaView 添加到视频容器
+        if renderData.isVideoAd, let mediaView = renderData.mediaView {
+            mediaView.frame = videoContainerView?.bounds ?? .zero
+            mediaView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            videoContainerView?.addSubview(mediaView)
         }
         
-        nativeAd.bindCustomViews(customViews, container: customAdView!, rootViewController: self)
+        // 绑定容器和可点击视图
+        guard let adView = customAdView else { return }
+        renderData.bind(withContainer: adView, clickableViews: [adView])
+        
+        // 关闭按钮
+        if let close = closeButton {
+            renderData.addCloseTarget(close)
+        }
+        
+        // 摇一摇/扭一扭监听
+        if let shakeView = renderData.shakeAnimationView {
+            renderData.addShakeTarget(shakeView)
+        }
         
         statusLabel.text = "渲染完成，等待曝光..."
     }

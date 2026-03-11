@@ -44,8 +44,10 @@ FOUNDATION_EXPORT const unsigned char HuanxiaoAdsVersionString[];
 #import <HuanxiaoAds/HXNativeAd.h>
 #import <HuanxiaoAds/HXNativeAd+Internal.h>
 #import <HuanxiaoAds/HXNativeAdRenderData.h>
-#import <HuanxiaoAds/HXNativeAdCustomViews.h>
+#import <HuanxiaoAds/HXMediaView.h>
 // 激励视频广告
 #import <HuanxiaoAds/HXRewardVideoAdDelegate.h>
 #import <HuanxiaoAds/HXRewardVideoAd.h>
 #import <HuanxiaoAds/HXRewardVideoAd+Internal.h>
+#import <HuanxiaoAds/HXResourceLoader.h>
+

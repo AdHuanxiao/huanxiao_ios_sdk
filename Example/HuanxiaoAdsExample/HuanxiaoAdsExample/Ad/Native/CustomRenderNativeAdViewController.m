@@ -243,7 +243,7 @@
         imageHeight = containerWidth * 9.0 / 16.0; // 16:9 比例
         
         // 静音按钮
-        self.isMuted = data.videoMuted;
+        self.isMuted = YES;
         self.muteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self updateMuteButtonIcon];
         self.muteButton.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
@@ -271,13 +271,13 @@
         self.mainImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.mainImageView.clipsToBounds = YES;
         self.mainImageView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
-        self.mainImageView.image = data.mainImage;
+        self.mainImageView.image = data.images.firstObject;
         self.mainImageView.translatesAutoresizingMaskIntoConstraints = NO;
         [contentView addSubview:self.mainImageView];
         
         // 计算图片高度
-        if (data.imageRatio > 0) {
-            imageHeight = containerWidth / data.imageRatio;
+        if (data.width > 0 && data.height > 0) {
+            imageHeight = containerWidth * data.height / data.width;
         } else {
             imageHeight = containerWidth * 9.0 / 16.0;
         }
@@ -305,16 +305,12 @@
     self.adBadgeIconView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.adBadgeContainer addSubview:self.adBadgeIconView];
     
-    // 设置图标：优先使用 SDK 返回的图标，否则使用系统图标
-    if (data.adBadgeIcon) {
-        self.adBadgeIconView.image = data.adBadgeIcon;
-    } else {
-        self.adBadgeIconView.image = [UIImage systemImageNamed:@"info.circle.fill"];
-    }
+    // 设置图标
+    self.adBadgeIconView.image = data.adLabelImage ?: [UIImage systemImageNamed:@"info.circle.fill"];
     
     // 广告标识文字
     self.adBadgeLabel = [[UILabel alloc] init];
-    self.adBadgeLabel.text = data.adBadgeText.length > 0 ? data.adBadgeText : @"广告";
+    self.adBadgeLabel.text = data.adLabel.length > 0 ? data.adLabel : @"广告";
     self.adBadgeLabel.font = [UIFont systemFontOfSize:10 weight:UIFontWeightMedium];
     self.adBadgeLabel.textColor = [UIColor whiteColor];
     self.adBadgeLabel.textAlignment = NSTextAlignmentCenter;
@@ -345,30 +341,21 @@
     [contentView addSubview:self.closeButton];
     
     // 交互提示（如果有）
-    if (data.interactionHintText.length > 0) {
-        self.interactionHintView = [[UIView alloc] init];
-        self.interactionHintView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.6];
-        self.interactionHintView.layer.cornerRadius = 4;
-        self.interactionHintView.translatesAutoresizingMaskIntoConstraints = NO;
-        [contentView addSubview:self.interactionHintView];
-        
-        self.interactionHintLabel = [[UILabel alloc] init];
-        self.interactionHintLabel.text = data.interactionHintText;
-        self.interactionHintLabel.font = [UIFont systemFontOfSize:12];
-        self.interactionHintLabel.textColor = [UIColor whiteColor];
-        self.interactionHintLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.interactionHintView addSubview:self.interactionHintLabel];
+    // 摇一摇/扭一扭动画视图（SDK 提供）
+    if (data.shakeAnimationView) {
+        data.shakeAnimationView.translatesAutoresizingMaskIntoConstraints = NO;
+        data.shakeAnimationView.layer.cornerRadius = 27.5;
+        data.shakeAnimationView.clipsToBounds = YES;
+        [contentView addSubview:data.shakeAnimationView];
         
         UIView *topView = data.isVideoAd ? self.videoContainerView : self.mainImageView;
         [NSLayoutConstraint activateConstraints:@[
-            [self.interactionHintView.bottomAnchor constraintEqualToAnchor:topView.bottomAnchor constant:-12],
-            [self.interactionHintView.centerXAnchor constraintEqualToAnchor:contentView.centerXAnchor],
-            
-            [self.interactionHintLabel.topAnchor constraintEqualToAnchor:self.interactionHintView.topAnchor constant:6],
-            [self.interactionHintLabel.bottomAnchor constraintEqualToAnchor:self.interactionHintView.bottomAnchor constant:-6],
-            [self.interactionHintLabel.leadingAnchor constraintEqualToAnchor:self.interactionHintView.leadingAnchor constant:12],
-            [self.interactionHintLabel.trailingAnchor constraintEqualToAnchor:self.interactionHintView.trailingAnchor constant:-12],
+            [data.shakeAnimationView.centerXAnchor constraintEqualToAnchor:topView.centerXAnchor],
+            [data.shakeAnimationView.centerYAnchor constraintEqualToAnchor:topView.centerYAnchor],
+            [data.shakeAnimationView.widthAnchor constraintEqualToConstant:55],
+            [data.shakeAnimationView.heightAnchor constraintEqualToConstant:55],
         ]];
+        [data.shakeAnimationView startAnimating];
     }
     
     // 底部信息区
@@ -382,7 +369,7 @@
     self.iconImageView.clipsToBounds = YES;
     self.iconImageView.layer.cornerRadius = 6;
     self.iconImageView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
-    self.iconImageView.image = data.iconImage ?: data.appIcon;
+    self.iconImageView.image = data.images.count > 1 ? data.images[1] : data.images.firstObject;
     self.iconImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [infoView addSubview:self.iconImageView];
     
@@ -397,7 +384,7 @@
     
     // 描述
     self.descLabel = [[UILabel alloc] init];
-    self.descLabel.text = data.desc;
+    self.descLabel.text = data.texts.firstObject;
     self.descLabel.font = [UIFont systemFontOfSize:13];
     self.descLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1.0];
     self.descLabel.numberOfLines = 2;
@@ -494,31 +481,29 @@
         return;
     }
     
-    NSLog(@"[CustomRenderNativeAd] 渲染数据: title=%@, desc=%@, isVideoAd=%@, interactionType=%ld",
-          renderData.title, renderData.desc, renderData.isVideoAd ? @"YES" : @"NO", (long)renderData.interactionType);
+    NSLog(@"[CustomRenderNativeAd] 渲染数据: title=%@, isVideoAd=%@, width=%ld, height=%ld",
+          renderData.title, renderData.isVideoAd ? @"YES" : @"NO", (long)renderData.width, (long)renderData.height);
     
     // 构建自渲染 UI
     [self buildCustomAdViewWithData:renderData];
     
-    // 绑定视图给 SDK
-    HXNativeAdCustomViews *customViews = [[HXNativeAdCustomViews alloc] init];
-    customViews.titleLabel = self.titleLabel;
-    customViews.descLabel = self.descLabel;
-    customViews.mainImageView = self.mainImageView;
-    customViews.iconImageView = self.iconImageView;
-    customViews.actionButton = self.ctaButton;
-    customViews.adBadgeView = self.adBadgeContainer;        // 合规必须
-    customViews.interactionHintView = self.interactionHintView;
-    customViews.closeButton = self.closeButton;
-    customViews.clickableView = self.customAdView;         // 整个广告区域可点击
-    
-    if (renderData.isVideoAd) {
-        customViews.videoContainerView = self.videoContainerView;
+    // 视频广告：将 SDK 提供的 mediaView 添加到视频容器
+    if (renderData.isVideoAd && renderData.mediaView) {
+        renderData.mediaView.frame = self.videoContainerView.bounds;
+        renderData.mediaView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.videoContainerView addSubview:renderData.mediaView];
     }
     
-    [nativeAd bindCustomViews:customViews
-                    container:self.customAdView
-           rootViewController:self];
+    // 绑定容器和可点击视图
+    [renderData bindWithContainer:self.customAdView clickableViews:@[self.customAdView]];
+    
+    // 关闭按钮
+    [renderData addCloseTarget:self.closeButton];
+    
+    // 摇一摇/扭一扭监听
+    if (renderData.shakeAnimationView) {
+        [renderData addShakeTarget:renderData.shakeAnimationView];
+    }
     
     self.statusLabel.text = @"渲染完成，等待曝光...";
 }

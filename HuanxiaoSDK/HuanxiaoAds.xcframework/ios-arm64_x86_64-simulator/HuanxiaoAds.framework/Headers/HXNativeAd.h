@@ -11,7 +11,7 @@
 #import <UIKit/UIKit.h>
 #import <HuanxiaoAds/HXNativeAdDelegate.h>
 #import <HuanxiaoAds/HXNativeAdRenderData.h>
-#import <HuanxiaoAds/HXNativeAdCustomViews.h>
+#import <HuanxiaoAds/HXMediaView.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, HXNativeAdRenderMode) {
     HXNativeAdRenderModeTemplate = 0,
     
     /// 自渲染（媒体渲染 UI）
-    /// 使用 renderData 获取数据，自行创建视图后调用 bindCustomViews:container:rootViewController:
+    /// 使用 renderData 获取数据，自行创建视图后调用 renderData 的绑定方法
     HXNativeAdRenderModeCustom = 1,
 };
 
@@ -147,30 +147,6 @@ typedef NS_ENUM(NSInteger, HXNativeAdRenderMode) {
  */
 @property (nonatomic, strong, readonly, nullable) HXNativeAdRenderData *renderData;
 
-/**
- * @brief 绑定自定义视图并注册（仅自渲染模式）
- *
- * @param customViews 媒体创建的视图绑定配置
- * @param container 广告容器视图
- * @param viewController 当前视图控制器
- *
- * @discussion
- * 自渲染模式下，媒体使用 renderData 数据自行创建视图后，
- * 调用此方法将视图绑定给 SDK。
- *
- * SDK 会执行以下操作：
- * 1. 在 videoContainerView 内添加视频播放层（视频广告）
- * 2. 注册曝光检测（监听 container 可见性）
- * 3. 注册交互检测（摇一摇/扭一扭）
- * 4. 添加点击手势到 clickableView 或 container
- * 5. 检测广告标识是否正确展示（合规）
- *
- * @note 必须在 loadAd 成功后、展示广告前调用
- * @note 仅自渲染模式有效，模板渲染模式调用无效果
- */
-- (void)bindCustomViews:(HXNativeAdCustomViews *)customViews
-              container:(UIView *)container
-     rootViewController:(UIViewController *)viewController;
 
 /**
  * @brief 手动触发曝光上报（仅自渲染模式）
