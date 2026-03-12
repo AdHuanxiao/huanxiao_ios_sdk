@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * @brief 获取 SDK 版本号
- * @return 版本号字符串，如 "1.0.0"
+ * @return 版本号字符串，如 "1.5.0"
  */
 + (NSString *)sdkVersion;
 
