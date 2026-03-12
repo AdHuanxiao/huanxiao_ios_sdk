@@ -11,7 +11,7 @@ import UIKit
 import HuanxiaoAds
 import CoreLocation
 
-private let kAppID = "101"
+private let kAppID = "2"
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

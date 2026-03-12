@@ -8,7 +8,7 @@
 #import <HuanxiaoAds/HuanxiaoAds.h>
 #import <CoreLocation/CoreLocation.h>
 
-static NSString * const kAppID = @"101";
+static NSString * const kAppID = @"2";
 
 @interface AppDelegate () <CLLocationManagerDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;

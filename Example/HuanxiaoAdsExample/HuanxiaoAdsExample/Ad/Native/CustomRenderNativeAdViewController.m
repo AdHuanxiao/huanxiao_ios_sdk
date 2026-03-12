@@ -70,6 +70,7 @@
     // 输入框
     self.adSpotTextField = [[UITextField alloc] init];
     self.adSpotTextField.placeholder = @"请输入广告位 ID";
+    self.adSpotTextField.text = @"7";
     self.adSpotTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.adSpotTextField.font = [UIFont systemFontOfSize:15];
     self.adSpotTextField.clearButtonMode = UITextFieldViewModeWhileEditing;

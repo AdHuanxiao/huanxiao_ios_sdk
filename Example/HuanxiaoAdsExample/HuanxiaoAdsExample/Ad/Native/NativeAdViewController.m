@@ -167,6 +167,7 @@
         if (indexPath.row == 0) {
             HXAdConfigInputCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HXAdConfigInputCell" forIndexPath:indexPath];
             [cell configureWithTitle:@"广告位 ID" placeholder:@"请输入信息流广告位 ID" text:@""];
+            cell.textField.text = @"7";
             self.adSpotIDField = cell.textField;
             return cell;
         } else {

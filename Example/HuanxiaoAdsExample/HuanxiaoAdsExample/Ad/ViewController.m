@@ -11,8 +11,6 @@
 #import "SplashAdViewController.h"
 #import "InterstitialAdViewController.h"
 #import "NativeAdViewController.h"
-#import "NativeAdTableViewController.h"
-#import "NativeAdWaterfallViewController.h"
 #import "CustomRenderNativeAdViewController.h"
 #import "RewardVideoAdViewController.h"
 #import <HuanxiaoAds/HuanxiaoAds.h>
@@ -222,8 +220,6 @@
         [HXMenuItem itemWithTitle:@"开屏广告" subtitle:@"Splash Ad - 应用启动时展示" iconName:@"rectangle.portrait" targetClass:[SplashAdViewController class]],
         [HXMenuItem itemWithTitle:@"插屏广告" subtitle:@"Interstitial Ad - 页面切换时展示" iconName:@"rectangle.center.inset.filled" targetClass:[InterstitialAdViewController class]],
         [HXMenuItem itemWithTitle:@"信息流广告" subtitle:@"Native Ad - 原生内容展示" iconName:@"list.bullet.rectangle" targetClass:[NativeAdViewController class]],
-        [HXMenuItem itemWithTitle:@"信息流广告 (列表)" subtitle:@"Native Ad in TableView - 嵌入内容流展示" iconName:@"list.bullet" targetClass:[NativeAdTableViewController class]],
-        [HXMenuItem itemWithTitle:@"信息流广告 (瀑布流)" subtitle:@"Native Ad Waterfall - 双列瀑布流展示" iconName:@"square.grid.2x2" targetClass:[NativeAdWaterfallViewController class]],
         [HXMenuItem itemWithTitle:@"自渲染信息流" subtitle:@"Custom Render Native Ad - 媒体自定义 UI" iconName:@"paintbrush" targetClass:[CustomRenderNativeAdViewController class]],
         [HXMenuItem itemWithTitle:@"激励视频广告" subtitle:@"Reward Video Ad - 观看获得奖励" iconName:@"play.rectangle" targetClass:[RewardVideoAdViewController class]],
     ];

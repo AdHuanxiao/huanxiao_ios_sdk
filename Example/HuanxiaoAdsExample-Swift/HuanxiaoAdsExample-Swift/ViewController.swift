@@ -204,8 +204,6 @@ class ViewController: UIViewController {
             HXMenuItem.item(title: "开屏广告", subtitle: "Splash Ad - 应用启动时展示", iconName: "rectangle.portrait", targetClass: SplashAdViewController.self),
             HXMenuItem.item(title: "插屏广告", subtitle: "Interstitial Ad - 页面切换时展示", iconName: "rectangle.center.inset.filled", targetClass: InterstitialAdViewController.self),
             HXMenuItem.item(title: "信息流广告", subtitle: "Native Ad - 原生内容展示", iconName: "list.bullet.rectangle", targetClass: NativeAdViewController.self),
-            HXMenuItem.item(title: "信息流广告 (列表)", subtitle: "Native Ad in TableView - 嵌入内容流展示", iconName: "list.bullet", targetClass: NativeAdTableViewController.self),
-            HXMenuItem.item(title: "信息流广告 (瀑布流)", subtitle: "Native Ad Waterfall - 双列瀑布流展示", iconName: "square.grid.2x2", targetClass: NativeAdWaterfallViewController.self),
             HXMenuItem.item(title: "自渲染信息流", subtitle: "Custom Render Native Ad - 媒体自定义 UI", iconName: "paintbrush", targetClass: CustomRenderNativeAdViewController.self),
             HXMenuItem.item(title: "激励视频广告", subtitle: "Reward Video Ad - 观看获得奖励", iconName: "play.rectangle", targetClass: RewardVideoAdViewController.self),
         ]
