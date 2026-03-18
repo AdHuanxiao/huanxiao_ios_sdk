@@ -29,6 +29,9 @@ FOUNDATION_EXPORT const unsigned char HuanxiaoAdsVersionString[];
 
 #pragma mark - 广告模块
 
+// 竞价结果通知协议
+#import <HuanxiaoAds/HXBidNotifiable.h>
+
 // 开屏广告
 #import <HuanxiaoAds/HXSplashAdDelegate.h>
 #import <HuanxiaoAds/HXSplashAd.h>

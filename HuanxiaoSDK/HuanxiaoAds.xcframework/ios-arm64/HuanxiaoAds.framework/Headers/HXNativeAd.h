@@ -12,6 +12,7 @@
 #import <HuanxiaoAds/HXNativeAdDelegate.h>
 #import <HuanxiaoAds/HXNativeAdRenderData.h>
 #import <HuanxiaoAds/HXMediaView.h>
+#import <HuanxiaoAds/HXBidNotifiable.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,7 +31,7 @@ typedef NS_ENUM(NSInteger, HXNativeAdRenderMode) {
     HXNativeAdRenderModeCustom = 1,
 };
 
-@interface HXNativeAd : NSObject
+@interface HXNativeAd : NSObject <HXBidNotifiable>
 
 #pragma mark - 属性
 
@@ -56,6 +57,12 @@ typedef NS_ENUM(NSInteger, HXNativeAdRenderMode) {
  * @brief 广告是否正在加载
  */
 @property (nonatomic, assign, readonly, getter=isLoading) BOOL loading;
+
+/**
+ * @brief 广告 eCPM（单位：分/CPM）
+ * @discussion 加载成功后有效，返回 0 表示未获取到价格信息
+ */
+@property (nonatomic, assign, readonly) NSUInteger ecpm;
 
 /**
  * @brief 广告视图尺寸

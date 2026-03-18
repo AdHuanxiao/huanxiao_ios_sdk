@@ -5,13 +5,13 @@ platform :ios, '13.0'
 target 'HuanxiaoAdsExample' do
   project './HuanxiaoAdsExample/HuanxiaoAdsExample.xcodeproj'
   use_frameworks!
-  pod 'HuanxiaoSDK','1.5.0'
+  pod 'HuanxiaoSDK','1.5.1'
 end
 
 
 target 'HuanxiaoAdsExample-Swift' do
   project './HuanxiaoAdsExample-Swift/HuanxiaoAdsExample-Swift.xcodeproj'
   use_frameworks!
-  pod 'HuanxiaoSDK','1.5.0'
+  pod 'HuanxiaoSDK','1.5.1'
 end
 

@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *title;
 //  广告图片素材
 @property (nonatomic, strong, readonly) NSArray *images;
+//  广告图片素材URL
+@property (nonatomic, strong, readonly) NSArray<NSString *> *imageUrls;
 //  广告文字素材
 @property (nonatomic, strong, readonly) NSArray *texts;
 //  广告视频素材
@@ -30,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) NSInteger width;
 //  广告素材高
 @property (nonatomic, assign, readonly) NSInteger height;
-// 由于广告法规定，必须添加广告标识（建议：广告标识放置在广告的左下角，logo放置在广告的右下角）
+//  由于广告法规定，必须添加广告标识（建议：广告标识放置在广告的左下角，logo放置在广告的右下角）
 //  广告标识图片
 @property (nonatomic, strong, readonly, nullable) UIImage *adLabelImage;
 //  广告标识文字
@@ -41,6 +43,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly, nullable) NSString *logoLabel;
 //  广告图标URL
 @property (nonatomic, copy, readonly, nullable) NSString *iconUrl;
+//  应用图标
+@property (nonatomic, strong, readonly, nullable) UIImage *appIcon;
+//  应用图标URL
+@property (nonatomic, copy, readonly, nullable) NSString *appIconUrl;
 //  摇一摇的 UIImageView 视图，调用 startAnimating 方法即可开启动画，视图 width/height = 1:1
 @property (nonatomic, strong, readonly, nullable) UIImageView *shakeAnimationView;
 //  是否是视频
