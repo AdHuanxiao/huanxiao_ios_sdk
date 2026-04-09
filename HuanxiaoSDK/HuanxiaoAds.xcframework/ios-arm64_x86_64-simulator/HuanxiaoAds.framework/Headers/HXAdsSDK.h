@@ -57,10 +57,40 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSString *)sdkVersion;
 
-#pragma mark - 初始化
+#pragma mark - 同步初始化
 
 /**
- * @brief 使用 AppID 初始化 SDK
+ * @brief 使用 AppID 同步初始化 SDK
+ *
+ * @param appID 应用 ID（必填）
+ *
+ * @discussion
+ * 方法会在当前线程等待初始化网络请求完成后返回，可直接在主线程调用。
+ * 使用默认配置，等同于使用默认 HXAdsConfig 调用 initializeWithConfig:
+ * 方法返回后可通过 @c isInitialized 判断是否成功。
+ * 内部逻辑（网络重试等）与异步版本完全一致。
+ */
+- (void)initializeWithAppID:(NSString *)appID;
+
+/**
+ * @brief 同步初始化 SDK
+ *
+ * @param config SDK 配置对象，包含 AppID 和隐私设置
+ *
+ * @discussion
+ * 方法会在当前线程等待初始化网络请求完成后返回，可直接在主线程调用。
+ * 方法返回后可通过 @c isInitialized 判断是否成功。
+ * 初始化成功后的后续流程（崩溃监控、IDFA 获取等）与异步版本完全一致。
+ * 网络失败时仍会注册自动重试，后续网络恢复后会在后台自动重新初始化。
+ *
+ * @warning AppID 为必填项，为空时初始化将失败并记录错误日志
+ */
+- (void)initializeWithConfig:(HXAdsConfig *)config;
+
+#pragma mark - 异步初始化
+
+/**
+ * @brief 使用 AppID 异步初始化 SDK
  *
  * @param appID 应用 ID（必填）
  * @param completion 初始化完成回调（主线程）
@@ -74,9 +104,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)initializeWithAppID:(NSString *)appID
                  completion:(nullable HXAdsInitializationCompletionHandler)completion;
 
-
 /**
- * @brief 初始化 SDK
+ * @brief 异步初始化 SDK
  *
  * @param config SDK 配置对象，包含 AppID 和隐私设置
  * @param completion 初始化完成回调（主线程）

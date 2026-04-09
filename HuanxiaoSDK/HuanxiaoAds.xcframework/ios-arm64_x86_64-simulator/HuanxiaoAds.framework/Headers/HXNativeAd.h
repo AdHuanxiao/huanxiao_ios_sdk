@@ -82,6 +82,17 @@ typedef NS_ENUM(NSInteger, HXNativeAdRenderMode) {
  */
 @property (nonatomic, assign) HXNativeAdRenderMode renderMode;
 
+/**
+ * @brief 曝光判定持续时间阈值（秒）
+ *
+ * @discussion
+ * 广告视图可见面积 >= 50% 并持续超过该时间后，判定为有效曝光并触发上报。
+ * 必须在调用 loadAd 之前设置，加载后修改不生效。
+ *
+ * @default 0.3
+ */
+@property (nonatomic, assign) NSTimeInterval exposureDurationThreshold;
+
 #pragma mark - 初始化
 
 /**
@@ -164,7 +175,7 @@ typedef NS_ENUM(NSInteger, HXNativeAdRenderMode) {
  *
  * 调用条件：
  * - 广告视图可见面积 >= 50%
- * - 持续可见时间 >= 1 秒
+ * - 持续可见时间 >= exposureDurationThreshold（默认 0.3 秒）
  *
  * @note 重复调用会被忽略（只上报一次）
  */

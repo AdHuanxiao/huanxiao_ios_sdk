@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 
 @class HXMediaView;
+@class HXInteractionContainerView;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -47,21 +48,37 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly, nullable) UIImage *appIcon;
 //  应用图标URL
 @property (nonatomic, copy, readonly, nullable) NSString *appIconUrl;
-//  摇一摇的 UIImageView 视图，调用 startAnimating 方法即可开启动画，视图 width/height = 1:1
-@property (nonatomic, strong, readonly, nullable) UIImageView *shakeAnimationView;
+
+/**
+ * 交互容器视图（摇一摇/扭一扭/滑动），媒体可在容器内 addSubview 添加自定义内容。
+ * 将容器添加到广告视图层级后，调用 bindWithContainer:clickableViews: 时 SDK 自动启动交互监测。
+ * 容器 width/height 建议 1:1，如 55x55
+ */
+@property (nonatomic, strong, readonly, nullable) HXInteractionContainerView *interactionContainerView;
+
+//  摇一摇的 UIImageView 视图（已废弃，请使用 interactionContainerView 替代）
+@property (nonatomic, strong, readonly, nullable) UIImageView *shakeAnimationView
+    __deprecated_msg("请使用 interactionContainerView 替代");
+
 //  是否是视频
 @property (nonatomic, assign, readonly) BOOL isVideoAd;
 //  如果 isVideoAd=YES，会提供视频播放器视图
 @property (nonatomic, strong, readonly, nullable) HXMediaView *mediaView;
 
-// 绑定展示视图和广告点击 View（该视图点击可以跳转到落地页）
+/// 绑定展示视图和广告点击 View（该视图点击可以跳转到落地页）。
+/// 如果 interactionContainerView 已添加到视图层级中，SDK 会自动启动交互监测和提示动画。
 - (void)bindWithContainer:(UIView *)containerView clickableViews:(NSArray *)clickableViews;
-// 添加关闭视图（该视图点击，可以关闭广告）
+
+/// 添加关闭视图（该视图点击，可以关闭广告）
 - (void)addCloseTarget:(UIView *)targetView;
-// 添加摇一摇视图，调用此方法后，SDK 内会开启摇一摇的监听，以及 targetView 的点击响应
-- (void)addShakeTarget:(UIView *)targetView;
-// 添加支持手势滑动的视图
-- (void)addSwipeTargets:(NSArray *)swipeViews;
+
+/// 已废弃：使用 interactionContainerView 替代，bindWithContainer: 时 SDK 自动绑定交互
+- (void)addShakeTarget:(UIView *)targetView
+    __deprecated_msg("请使用 interactionContainerView 替代，bindWithContainer: 时 SDK 自动绑定交互");
+
+/// 已废弃：使用 interactionContainerView 替代，bindWithContainer: 时 SDK 自动绑定交互
+- (void)addSwipeTargets:(NSArray *)swipeViews
+    __deprecated_msg("请使用 interactionContainerView 替代，bindWithContainer: 时 SDK 自动绑定交互");
 
 @end
 

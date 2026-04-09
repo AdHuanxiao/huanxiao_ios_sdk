@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param nativeAd 信息流广告实例
  *
  * @discussion
- * 广告视图可见面积超过 50% 且持续 1 秒后触发。
+ * 广告视图可见面积超过 50% 且持续超过 exposureDurationThreshold（默认 0.3 秒）后触发。
  * SDK 会自动上报曝光。
  */
 - (void)nativeAdDidExpose:(HXNativeAd *)nativeAd;

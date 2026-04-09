@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name             = 'HuanxiaoSDK'
-  spec.version          = '1.5.1'
+  spec.version          = '1.5.2'
   spec.summary          = 'HuanxiaoSDK for iOS'
   spec.description      = <<-DESC
                           HuanxiaoSDK
@@ -47,7 +47,7 @@ Pod::Spec.new do |spec|
     ss.ios.deployment_target = '13.0'
     ss.vendored_frameworks = 'HuanxiaoSDK/HuanxiaoAdsAwmAdapterSDK.xcframework'
     ss.dependency 'HuanxiaoSDK/Core'
-    ss.dependency 'ToBid-iOS', '<=4.7.1'
+    ss.dependency 'ToBid-iOS'
   end
   
   spec.subspec 'HemuAdapterSDK' do |ss|

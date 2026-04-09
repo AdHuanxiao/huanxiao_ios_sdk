@@ -91,6 +91,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) BOOL videoMuted;
 
+/**
+ * @brief 点击后是否自动关闭广告
+ *
+ * @discussion
+ * 设置为 YES 时，用户触发点击、摇一摇、扭一扭、滑动等交互后，
+ * 开屏广告视图会自动关闭，但点击跳转（DeepLink、Universal Link、App Store 等）
+ * 以及点击上报等后续逻辑仍会正常执行。
+ *
+ * @default NO（默认交互后不自动关闭广告）
+ */
+@property (nonatomic, assign) BOOL closeAdAfterClick;
+
 #pragma mark - 广告操作
 
 /**

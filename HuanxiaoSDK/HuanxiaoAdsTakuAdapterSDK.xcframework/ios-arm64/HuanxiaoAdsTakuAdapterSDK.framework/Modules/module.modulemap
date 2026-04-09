@@ -1,6 +1,0 @@
-framework module HuanxiaoAdsTakuAdapterSDK {
-  umbrella header "HuanxiaoAdsTakuAdapterSDK.h"
-  export *
-
-  module * { export * }
-}
