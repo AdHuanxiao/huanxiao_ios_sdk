@@ -38,8 +38,8 @@ Pod::Spec.new do |spec|
     ss.ios.deployment_target = '13.0'
     ss.vendored_frameworks = 'HuanxiaoSDK/HuanxiaoAdsCSJAdapterSDK.xcframework'
     ss.dependency 'HuanxiaoSDK/Core'
-    ss.dependency 'Ads-CN/BUAdSDK'
-    ss.dependency 'Ads-CN/CSJMediation'
+    ss.dependency 'Ads-CN-Beta/BUAdSDK'
+    ss.dependency 'Ads-CN-Beta/CSJMediation'
     
   end
   
