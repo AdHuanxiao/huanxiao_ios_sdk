@@ -65,6 +65,13 @@ NS_ASSUME_NONNULL_BEGIN
 //  如果 isVideoAd=YES，会提供视频播放器视图
 @property (nonatomic, strong, readonly, nullable) HXMediaView *mediaView;
 
+#pragma mark - 行为激励信息（actReward 开启时有值）
+
+/// 激励信息文案，如 "浏览获得奖励"
+@property (nonatomic, copy, readonly, nullable) NSString *rewardInfoText;
+/// 达标所需浏览时长（秒）
+@property (nonatomic, assign, readonly) NSUInteger rewardSeconds;
+
 /// 绑定展示视图和广告点击 View（该视图点击可以跳转到落地页）。
 /// 如果 interactionContainerView 已添加到视图层级中，SDK 会自动启动交互监测和提示动画。
 - (void)bindWithContainer:(UIView *)containerView clickableViews:(NSArray *)clickableViews;

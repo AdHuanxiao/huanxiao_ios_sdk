@@ -93,6 +93,34 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)nativeAd:(HXNativeAd *)nativeAd didCalculateRecommendedHeight:(CGFloat)recommendedHeight;
 
+#pragma mark - 行为激励（actReward 开启时有效）
+
+/**
+ * @brief 行为激励达标，用户获得奖励
+ *
+ * @param nativeAd 信息流广告实例
+ *
+ * @discussion
+ * 当用户累计浏览时长达到 rewardSeconds 后触发此回调。
+ * 开发者需要在此回调中给用户发放奖励。
+ *
+ * @note 此回调仅在 actReward = YES 时有效，且仅触发一次
+ */
+- (void)nativeAdDidReward:(HXNativeAd *)nativeAd;
+
+/**
+ * @brief 行为激励未达标
+ *
+ * @param nativeAd 信息流广告实例
+ * @param remainingTime 剩余所需浏览时长（秒）
+ *
+ * @discussion
+ * 用户从落地页/外部 App 返回后，累计浏览时长未达标时触发。
+ * 开发者可据此提示用户"还差 X 秒获得奖励"，鼓励再次点击。
+ * 再次点击后浏览时长可累计。
+ */
+- (void)nativeAd:(HXNativeAd *)nativeAd didFailRewardWithRemainingTime:(NSInteger)remainingTime;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -98,6 +98,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showFromViewController:(UIViewController *)viewController;
 
 /**
+ * @brief 在指定窗口展示广告
+ *
+ * @param window 用于展示广告的窗口
+ */
+- (void)showInWindow:(UIWindow *)window;
+
+/**
  * @brief 关闭广告
  *
  * @discussion

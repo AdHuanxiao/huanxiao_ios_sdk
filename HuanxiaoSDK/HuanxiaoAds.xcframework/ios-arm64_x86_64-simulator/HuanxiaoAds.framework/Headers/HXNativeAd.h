@@ -83,6 +83,24 @@ typedef NS_ENUM(NSInteger, HXNativeAdRenderMode) {
 @property (nonatomic, assign) HXNativeAdRenderMode renderMode;
 
 /**
+ * @brief 是否开启行为激励
+ *
+ * @discussion
+ * 开启后，广告请求会携带 actReward=1 参数。
+ * 服务端返回的广告仅支持自渲染（SDK 会强制切换 renderMode 为 Custom），
+ * 且不支持摇/扭/滑交互，仅支持点击跳转。
+ *
+ * 用户点击广告跳转后返回时，SDK 会判断累计浏览时长是否达标，
+ * 并通过 delegate 回调 nativeAd:didRewardWithRewardInfo: 或
+ * nativeAd:didFailRewardWithRemainingTime:。
+ *
+ * 必须在调用 loadAd 之前设置。
+ *
+ * @default NO
+ */
+@property (nonatomic, assign) BOOL actReward;
+
+/**
  * @brief 曝光判定持续时间阈值（秒）
  *
  * @discussion

@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name             = 'HuanxiaoSDK'
-  spec.version          = '1.5.2'
+  spec.version          = '1.5.3'
   spec.summary          = 'HuanxiaoSDK for iOS'
   spec.description      = <<-DESC
                           HuanxiaoSDK
@@ -38,8 +38,8 @@ Pod::Spec.new do |spec|
     ss.ios.deployment_target = '13.0'
     ss.vendored_frameworks = 'HuanxiaoSDK/HuanxiaoAdsCSJAdapterSDK.xcframework'
     ss.dependency 'HuanxiaoSDK/Core'
-    ss.dependency 'Ads-CN-Beta/BUAdSDK'
-    ss.dependency 'Ads-CN-Beta/CSJMediation'
+    ss.dependency 'Ads-CN/BUAdSDK'
+    ss.dependency 'Ads-CN/CSJMediation'
     
   end
   
@@ -52,7 +52,7 @@ Pod::Spec.new do |spec|
   
   spec.subspec 'HemuAdapterSDK' do |ss|
     ss.ios.deployment_target = '13.0'
-    ss.vendored_frameworks = 'HuanxiaoSDK/HuanxiaoAdsAwmAdapterSDK.xcframework'
+    ss.vendored_frameworks = 'HuanxiaoSDK/HuanxiaoAdsHMAdapterSDK.xcframework'
     ss.dependency 'HuanxiaoSDK/Core'
     ss.dependency 'MediatomiOS'
   end

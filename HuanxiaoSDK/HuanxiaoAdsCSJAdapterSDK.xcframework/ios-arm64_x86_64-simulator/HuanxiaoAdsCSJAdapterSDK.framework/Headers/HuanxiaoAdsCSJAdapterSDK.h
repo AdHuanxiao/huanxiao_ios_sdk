@@ -16,6 +16,7 @@ FOUNDATION_EXPORT const unsigned char HuanxiaoAdsCSJAdapterSDKVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <HuanxiaoAdsCSJAdapterSDK/PublicHeader.h>
 
 #import "HuanxiaoAdsCSJAdapterSDK/HXCSJConfigAdapter.h"
+#import "HuanxiaoAdsCSJAdapterSDK/HXCSJInitManager.h"
 #import "HuanxiaoAdsCSJAdapterSDK/HXCSJSplashAdapter.h"
 #import "HuanxiaoAdsCSJAdapterSDK/HXCSJInterstitialAdapter.h"
 #import "HuanxiaoAdsCSJAdapterSDK/HXCSJNativeAdapter.h"

@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief SDK 版本号
  * @discussion 格式: 主版本.次版本.修订版本
  */
-static NSString * const HXAdsSDKVersion = @"1.5.2";
+static NSString * const HXAdsSDKVersion = @"1.5.3";
 
 /**
  * @brief SDK 错误域
@@ -205,9 +205,16 @@ typedef NS_ENUM(NSInteger, HXAdsInitializationStatus) {
     
     /**
      * @brief 初始化失败
-     * @discussion SDK 初始化失败，请检查错误信息后重试
+     * @discussion SDK 初始化失败（不可重试的错误，如 AppID 无效），请检查错误信息后重试
      */
     HXAdsInitializationStatusFailed = 3,
+
+    /**
+     * @brief 初始化等待中
+     * @discussion 首次网络请求未能完成（如首次安装等待网络授权），SDK 将在网络恢复后自动重试。
+     *            此状态下调用广告加载方法会自动排队，初始化成功后按序执行。
+     */
+    HXAdsInitializationStatusPending = 4,
 };
 
 

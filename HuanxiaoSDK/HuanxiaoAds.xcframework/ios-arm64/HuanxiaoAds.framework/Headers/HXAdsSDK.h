@@ -124,6 +124,27 @@ NS_ASSUME_NONNULL_BEGIN
                   completion:(nullable HXAdsInitializationCompletionHandler)completion;
 
 
+#pragma mark - 就绪队列
+
+/**
+ * @brief 在 SDK 初始化就绪后执行任务
+ *
+ * @param block   就绪后执行的回调（主线程），error 非空表示等待超时或初始化永久失败
+ * @param timeout 最大等待时间（秒），超时后回调 error 并放弃等待
+ *
+ * @discussion
+ * 根据当前 SDK 状态有三种行为：
+ * - @c HXAdsInitializationStatusReady：立即在主线程执行 block(nil)
+ * - @c HXAdsInitializationStatusPending / @c HXAdsInitializationStatusInitializing：
+ *   任务入队等待，初始化成功后按入队顺序执行；超时则回调 error
+ * - @c HXAdsInitializationStatusFailed / @c HXAdsInitializationStatusNotStarted：
+ *   立即回调 error（不可恢复的失败状态，或未调用初始化）
+ *
+ * @note SDK 内部各广告类型在 loadAd 时自动使用此队列，媒体开发者一般无需直接调用。
+ */
+- (void)executeWhenReady:(void(^)(NSError * _Nullable error))block
+                 timeout:(NSTimeInterval)timeout;
+
 #pragma mark - 隐私设置
 
 /**
