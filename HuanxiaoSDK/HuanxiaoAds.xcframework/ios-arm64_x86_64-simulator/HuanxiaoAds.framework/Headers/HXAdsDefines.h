@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief SDK 版本号
  * @discussion 格式: 主版本.次版本.修订版本
  */
-static NSString * const HXAdsSDKVersion = @"1.5.3";
+static NSString * const HXAdsSDKVersion = @"1.5.3.2";
 
 /**
  * @brief SDK 错误域
