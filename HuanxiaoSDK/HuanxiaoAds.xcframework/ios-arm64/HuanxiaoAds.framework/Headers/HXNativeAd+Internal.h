@@ -36,6 +36,19 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) NSTimeInterval tolerateTimeout;
 
+#pragma mark - 交互检测控制（聚合 Adapter 使用）
+
+/**
+ * @brief 永久停止当前广告的摇/扭运动检测
+ *
+ * @discussion
+ * 自渲染模式下，HXNativeAd 自带的 HXNativeAdVisibilityManager 会按"屏中心"自动调度
+ * 运动检测；该方法用于聚合渠道（如 ToBid）的 destoryShakeView 等生命周期钩子，主动
+ * 停止运动检测并阻止 visibility manager 后续再次激活，避免 ToBid 已要求销毁摇一摇
+ * 后用户摇手机仍向 mediator 上报 click。调用后该实例不再触发摇/扭交互。
+ */
+- (void)stopMotionDetection;
+
 @end
 
 NS_ASSUME_NONNULL_END
