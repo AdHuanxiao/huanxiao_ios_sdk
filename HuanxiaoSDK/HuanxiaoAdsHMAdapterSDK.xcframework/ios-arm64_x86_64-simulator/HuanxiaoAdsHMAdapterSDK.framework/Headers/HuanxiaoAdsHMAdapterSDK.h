@@ -19,3 +19,4 @@ FOUNDATION_EXPORT const unsigned char HuanxiaoAdsHMAdapterSDKVersionString[];
 #import <HuanxiaoAdsHMAdapterSDK/HXHMInterstitialAdapter.h>
 #import <HuanxiaoAdsHMAdapterSDK/HXHMNativeAdapter.h>
 #import <HuanxiaoAdsHMAdapterSDK/HXHMRewardVideoAdapter.h>
+#import <HuanxiaoAdsHMAdapterSDK/HXHMBannerAdapter.h>

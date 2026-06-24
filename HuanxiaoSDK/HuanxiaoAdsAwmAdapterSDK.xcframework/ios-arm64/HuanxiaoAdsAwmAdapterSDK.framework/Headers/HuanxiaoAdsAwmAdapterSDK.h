@@ -12,6 +12,7 @@ FOUNDATION_EXPORT const unsigned char HuanxiaoAdsAwmAdapterSDKVersionString[];
 
 #import <HuanxiaoAdsAwmAdapterSDK/HXAwmConfigAdapter.h>
 #import <HuanxiaoAdsAwmAdapterSDK/HXAwmSplashAdapter.h>
+#import <HuanxiaoAdsAwmAdapterSDK/HXAwmBannerAdapter.h>
 #import <HuanxiaoAdsAwmAdapterSDK/HXAwmInterstitialAdapter.h>
 #import <HuanxiaoAdsAwmAdapterSDK/HXAwmNativeAdapter.h>
 #import <HuanxiaoAdsAwmAdapterSDK/HXAwmRewardedVideoAdapter.h>

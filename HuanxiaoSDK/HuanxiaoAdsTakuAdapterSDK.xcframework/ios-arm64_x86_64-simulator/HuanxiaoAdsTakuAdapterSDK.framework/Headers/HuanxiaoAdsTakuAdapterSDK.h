@@ -52,3 +52,11 @@ FOUNDATION_EXPORT const unsigned char HuanxiaoAdsTakuAdapterSDKVersionString[];
 
 #import "HuanxiaoAdsTakuAdapterSDK/HXTopOnRewardedVideoAdapter.h"
 #import "HuanxiaoAdsTakuAdapterSDK/HXTopOnRewardedVideoDelegate.h"
+
+// ============================================================================
+// 横幅广告适配器（内部用自渲染信息流实现）
+// ============================================================================
+
+#import "HuanxiaoAdsTakuAdapterSDK/HXTopOnBannerAdapter.h"
+#import "HuanxiaoAdsTakuAdapterSDK/HXTopOnBannerDelegate.h"
+#import "HuanxiaoAdsTakuAdapterSDK/HXTopOnBannerView.h"
