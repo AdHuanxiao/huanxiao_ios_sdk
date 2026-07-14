@@ -75,6 +75,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) BOOL videoMuted;
 
+/// 落地页弹出控制器，一般传当前 VC。落地页/App Store/合规页面从该控制器弹出；不设置或失效时自动探测顶层。
+/// 用 showFromViewController: 展示时未设置则默认用展示控制器。弱引用。
+@property (nonatomic, weak, nullable) UIViewController *landingPageRootViewController;
+
 #pragma mark - 广告操作
 
 /**

@@ -31,6 +31,53 @@ typedef NS_ENUM(NSInteger, HXNativeAdRenderMode) {
     HXNativeAdRenderModeCustom = 1,
 };
 
+/**
+ * @brief 自渲染信息流的视频渲染方式
+ *
+ * @discussion 仅 renderMode = HXNativeAdRenderModeCustom 时有效
+ */
+typedef NS_ENUM(NSInteger, HXNativeVideoRenderMode) {
+    /// SDK 提供播放视图（默认），取 renderData.mediaView 使用
+    HXNativeVideoRenderModeSDK = 0,
+    
+    /// 开发者自行提供播放器，renderData.mediaView 为 nil，
+    /// 视频素材见 renderData 的 videoUrl / videoCoverUrl / videoDuration / videoSize
+    HXNativeVideoRenderModeCustom = 1,
+};
+
+@class HXNativeAd;
+
+#pragma mark - 自定义视频
+
+/**
+ * @brief 自定义视频播放器的控制回调
+ *
+ * @discussion
+ * 仅 videoRenderMode = HXNativeVideoRenderModeCustom 时使用。
+ * 广告滑出屏幕、App 切后台、用户点击跳转等场景下 SDK 会回调暂停/恢复，
+ * 请在回调里操作自己的播放器。回调均在主线程。
+ */
+@protocol HXNativeAdCustomVideoDelegate <NSObject>
+
+@required
+
+/// 恢复播放（广告重新可见、App 回前台、跳转页关闭等）
+- (void)nativeAdRequestResumeVideo:(HXNativeAd *)nativeAd;
+
+/// 暂停播放（广告不可见、App 进后台、用户跳转等）
+- (void)nativeAdRequestPauseVideo:(HXNativeAd *)nativeAd;
+
+@optional
+
+/// 设置静音，nativeAd.videoMuted 变化时回调。
+/// enableDefaultAudioSessionSetting 为 YES 时，取消静音前 SDK 会先配置 AVAudioSession，媒体只需同步 player.muted。
+- (void)nativeAd:(HXNativeAd *)nativeAd requestMuteVideo:(BOOL)muted;
+
+/// 停止播放并释放资源，广告 close 时回调，之后不会再有恢复回调
+- (void)nativeAdRequestStopVideo:(HXNativeAd *)nativeAd;
+
+@end
+
 @interface HXNativeAd : NSObject <HXBidNotifiable>
 
 #pragma mark - 属性
@@ -81,6 +128,20 @@ typedef NS_ENUM(NSInteger, HXNativeAdRenderMode) {
  * @default HXNativeAdRenderModeTemplate
  */
 @property (nonatomic, assign) HXNativeAdRenderMode renderMode;
+
+/**
+ * @brief 视频渲染方式（仅自渲染模式有效）
+ *
+ * @discussion
+ * loadAd 前设置。默认 HXNativeVideoRenderModeSDK，取 renderData.mediaView 即可。
+ * 设为 Custom 时自行播放视频，绑定时使用
+ * bindWithContainer:clickableViews:customVideoView:videoDelegate:
+ */
+@property (nonatomic, assign) HXNativeVideoRenderMode videoRenderMode;
+
+/// 落地页弹出控制器，一般传当前 VC。落地页/App Store/合规页面从该控制器弹出；不设置或失效时自动探测顶层。
+/// 不设置时优先使用广告容器所在控制器。弱引用。
+@property (nonatomic, weak, nullable) UIViewController *landingPageRootViewController;
 
 /**
  * @brief 是否开启行为激励
@@ -225,6 +286,23 @@ typedef NS_ENUM(NSInteger, HXNativeAdRenderMode) {
  * @discussion 仅对视频广告有效，图片广告调用无效果
  */
 - (void)resumeVideo;
+
+#pragma mark - 自定义视频播放事件回传
+
+// 自定义视频模式下播放发生在开发者自己的播放器里，SDK 无法自动感知，
+// 请在对应时机调用以下方法完成视频统计。未接入会导致视频数据缺失。
+
+/// 视频开始播放，重复调用无效
+- (void)notifyCustomVideoDidStart;
+
+/// 播放进度 0.0~1.0，建议 0.5~1 秒回传一次，SDK 会在 25%/50%/75% 处各记一次
+- (void)notifyCustomVideoDidReachProgress:(CGFloat)progress;
+
+/// 播放完成，重复调用无效
+- (void)notifyCustomVideoDidComplete;
+
+/// 播放失败
+- (void)notifyCustomVideoDidFailWithError:(nullable NSError *)error;
 
 @end
 

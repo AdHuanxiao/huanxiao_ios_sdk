@@ -63,6 +63,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) CGFloat bottomViewHeight;
 
+/// 落地页弹出控制器，一般传当前 VC。不设置或失效时自动探测顶层。
+/// VC 展示模式下未设置则默认用展示控制器。弱引用。
+@property (nonatomic, weak, nullable) UIViewController *landingPageRootViewController;
+
 #pragma mark - 初始化
 
 /**

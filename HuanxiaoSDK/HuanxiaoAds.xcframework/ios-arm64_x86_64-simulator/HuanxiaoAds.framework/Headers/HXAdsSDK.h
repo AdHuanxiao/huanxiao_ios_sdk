@@ -145,6 +145,24 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)executeWhenReady:(void(^)(NSError * _Nullable error))block
                  timeout:(NSTimeInterval)timeout;
 
+#pragma mark - 音频设置
+
+/**
+ * @brief 是否使用 SDK 默认音频会话设置
+ *
+ * @param enabled YES: 使用 SDK 默认设置，NO: 由媒体自行管理 AVAudioSession
+ *
+ * @discussion
+ * 默认值为 YES。设置为 NO 后，SDK 在广告播放时不主动修改 AVAudioSession。
+ * 如需完全接管音频会话，可在展示广告前关闭该开关。
+ */
++ (void)enableDefaultAudioSessionSetting:(BOOL)enabled;
+
+/**
+ * @brief 当前是否使用 SDK 默认音频会话设置
+ */
++ (BOOL)isDefaultAudioSessionSettingEnabled;
+
 #pragma mark - 隐私设置
 
 /**

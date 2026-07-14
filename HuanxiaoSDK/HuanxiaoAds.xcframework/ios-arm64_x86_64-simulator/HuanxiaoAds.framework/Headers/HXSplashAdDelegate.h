@@ -90,6 +90,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)splashAdDidClickSkip:(HXSplashAd *)splashAd;
 
+#pragma mark - 应用内落地页
+
+/// 应用内落地页打开（点击广告后，落地页 / 合规页面 / App Store 内部展示等应用内二级页面打开时回调）
+- (void)splashAdDidOpenLandingPage:(HXSplashAd *)splashAd;
+
+/// 应用内落地页关闭（上述应用内二级页面关闭、返回开屏时回调）
+- (void)splashAdDidCloseLandingPage:(HXSplashAd *)splashAd;
+
 #pragma mark - 广告关闭
 
 /**

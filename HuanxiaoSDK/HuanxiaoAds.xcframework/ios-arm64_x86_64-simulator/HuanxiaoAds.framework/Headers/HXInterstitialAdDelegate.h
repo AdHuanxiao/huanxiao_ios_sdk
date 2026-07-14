@@ -90,6 +90,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)interstitialAdDidClickClose:(HXInterstitialAd *)interstitialAd;
 
+#pragma mark - 应用内落地页
+
+/// 应用内落地页打开（点击广告后，落地页 / 合规页面 / App Store 内部展示等应用内二级页面打开时回调）
+- (void)interstitialAdDidOpenLandingPage:(HXInterstitialAd *)interstitialAd;
+
+/// 应用内落地页关闭（上述应用内二级页面关闭、返回广告时回调）
+- (void)interstitialAdDidCloseLandingPage:(HXInterstitialAd *)interstitialAd;
+
 #pragma mark - 广告关闭
 
 /**

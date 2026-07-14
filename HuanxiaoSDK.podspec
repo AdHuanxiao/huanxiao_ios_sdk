@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name             = 'HuanxiaoSDK'
-  spec.version          = '1.5.9'
+  spec.version          = '1.5.10'
   spec.summary          = 'HuanxiaoSDK for iOS'
   spec.description      = <<-DESC
                           HuanxiaoSDK
@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   spec.resources = [
     'HuanxiaoSDK/Resources/HXAdsImages.bundle'
   ]
-  # 默认只安装基础SDK
+
   spec.default_subspecs = 'Core'
   
 

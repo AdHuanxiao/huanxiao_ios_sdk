@@ -12,6 +12,7 @@
 
 @class HXMediaView;
 @class HXInteractionContainerView;
+@protocol HXNativeAdCustomVideoDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -62,8 +63,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 //  是否是视频
 @property (nonatomic, assign, readonly) BOOL isVideoAd;
-//  如果 isVideoAd=YES，会提供视频播放器视图
+//  视频播放视图，isVideoAd=YES 时有值。
+//  videoRenderMode 设为 Custom 时为 nil，请用下方 videoUrl 等字段自行播放
 @property (nonatomic, strong, readonly, nullable) HXMediaView *mediaView;
+
+#pragma mark - 视频素材（isVideoAd=YES 时有值，自定义视频模式使用）
+
+//  视频播放地址
+@property (nonatomic, copy, readonly, nullable) NSString *videoUrl;
+//  视频封面图地址
+@property (nonatomic, copy, readonly, nullable) NSString *videoCoverUrl;
+//  视频时长（秒）
+@property (nonatomic, assign, readonly) NSTimeInterval videoDuration;
+//  视频素材宽高（像素）
+@property (nonatomic, assign, readonly) CGSize videoSize;
 
 #pragma mark - 行为激励信息（actReward 开启时有值）
 
@@ -75,6 +88,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// 绑定展示视图和广告点击 View（该视图点击可以跳转到落地页）。
 /// 如果 interactionContainerView 已添加到视图层级中，SDK 会自动启动交互监测和提示动画。
 - (void)bindWithContainer:(UIView *)containerView clickableViews:(NSArray *)clickableViews;
+
+/// 绑定展示视图和可点击区域。videoRenderMode = Custom 且为视频广告时使用：
+/// customVideoView 传你的播放器视图（弱引用），videoDelegate 传播放控制实现（弱引用）。
+/// 需要点击视频区域跳转时，把视频视图一并放进 clickableViews。
+- (void)bindWithContainer:(UIView *)containerView
+           clickableViews:(NSArray *)clickableViews
+          customVideoView:(nullable UIView *)customVideoView
+            videoDelegate:(nullable id<HXNativeAdCustomVideoDelegate>)videoDelegate;
 
 /// 添加关闭视图（该视图点击，可以关闭广告）
 - (void)addCloseTarget:(UIView *)targetView;
