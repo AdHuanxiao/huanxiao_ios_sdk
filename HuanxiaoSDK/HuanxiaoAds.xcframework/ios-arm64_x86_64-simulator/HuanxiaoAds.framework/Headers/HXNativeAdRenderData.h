@@ -16,6 +16,37 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// 自渲染广告的应用信息。下载类广告应使用这些字段展示应用合规信息。
+@interface HXNativeAdAppInfo : NSObject
+
+/// 应用名称
+@property (nonatomic, copy, readonly, nullable) NSString *name;
+/// 应用图标地址。
+@property (nonatomic, copy, readonly, nullable) NSString *iconUrl;
+/// 应用大小，单位 KB；
+@property (nonatomic, assign, readonly) NSUInteger sizeInKilobytes;
+/// 应用版本号
+@property (nonatomic, copy, readonly, nullable) NSString *versionName;
+/// 应用包名
+@property (nonatomic, copy, readonly, nullable) NSString *packageName;
+/// 应用开发者
+@property (nonatomic, copy, readonly, nullable) NSString *developer;
+/// 应用权限说明页面地址
+@property (nonatomic, copy, readonly, nullable) NSString *permissionUrl;
+/// 应用隐私协议页面地址
+@property (nonatomic, copy, readonly, nullable) NSString *privacyUrl;
+/// 应用介绍页面地址
+@property (nonatomic, copy, readonly, nullable) NSString *descriptionUrl;
+/// 应用备案信息页面地址
+@property (nonatomic, copy, readonly, nullable) NSString *icpUrl;
+/// 应用适用年龄
+@property (nonatomic, copy, readonly, nullable) NSString *ageLimit;
+
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
+
+@end
+
 @interface HXNativeAdRenderData : NSObject
 
 //  按钮文字
@@ -49,6 +80,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly, nullable) UIImage *appIcon;
 //  应用图标URL
 @property (nonatomic, copy, readonly, nullable) NSString *appIconUrl;
+/// 应用信息。下载类广告应按监管要求展示相应信息。
+@property (nonatomic, strong, readonly, nullable) HXNativeAdAppInfo *appInfo;
 
 /**
  * 交互容器视图（摇一摇/扭一扭/滑动），媒体可在容器内 addSubview 添加自定义内容。
@@ -63,6 +96,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 //  是否是视频
 @property (nonatomic, assign, readonly) BOOL isVideoAd;
+/// 是否是下载类广告。
+@property (nonatomic, assign, readonly) BOOL isDownloadAd;
 //  视频播放视图，isVideoAd=YES 时有值。
 //  videoRenderMode 设为 Custom 时为 nil，请用下方 videoUrl 等字段自行播放
 @property (nonatomic, strong, readonly, nullable) HXMediaView *mediaView;

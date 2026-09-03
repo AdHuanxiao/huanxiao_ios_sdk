@@ -85,8 +85,10 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief 加载广告
  *
  * @discussion
- * 加载广告素材（包括视频下载）。
+ * 加载广告数据及封面等必要展示资源；视频内容在展示时由系统播放器按需缓冲。
  * 加载成功后回调 rewardVideoAdDidLoad:，可以展示广告。
+ * 同一实例可在上一轮加载失败，或上一轮广告关闭后再次调用 loadAd 刷新广告；
+ * 上一轮仍在加载、等待展示或展示时的重复调用会被忽略。
  *
  * @note 建议在用户可能需要观看广告前提前加载
  */
@@ -103,6 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @note
  * - 展示前请检查 isAdValid 确保广告有效
+ * - 每次加载成功的广告只允许展示一次，重复调用会回调展示失败
  * - 展示广告时建议暂停应用音频
  */
 - (void)showFromViewController:(UIViewController *)viewController;

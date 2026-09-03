@@ -38,13 +38,29 @@ NS_ASSUME_NONNULL_BEGIN
  * - iOS 14.5 之前：可直接获取
  * - iOS 14.5 及之后：需要通过 ATTrackingManager 请求用户授权
  *
- * 设置为 NO 时，SDK 不会尝试获取 IDFA，可能影响广告投放精准度。
+ * 设置为 NO 时，SDK 不会检查 ATT 状态、请求 ATT 权限或读取系统 IDFA。
+ * 媒体通过 HXAdsSDK 的 setIDFA: 手动传入的值不受此开关影响。
  *
  * @note 建议在请求 ATT 授权后，根据用户选择设置此项
  *
- * @default YES
+ * @default NO（默认关闭，保护用户隐私）
  */
 @property (nonatomic, assign) BOOL idfaEnabled;
+
+/**
+ * @brief 是否允许自动获取 IDFV
+ *
+ * @discussion
+ * IDFV (Identifier for Vendor) 是 iOS 为同一开发者应用提供的设备标识符。
+ * 设置为 YES 时，SDK 会在初始化成功后读取一次系统 IDFV 并用于广告请求。
+ * 设置为 NO 时，SDK 不会访问 identifierForVendor。
+ * 媒体通过 HXAdsSDK 的 setIDFV: 手动传入的值不受此开关影响。
+ *
+ * @note 建议仅在用户同意隐私政策后开启此选项
+ *
+ * @default NO（默认关闭，保护用户隐私）
+ */
+@property (nonatomic, assign) BOOL idfvEnabled;
 
 /**
  * @brief 是否允许获取地理位置
@@ -77,7 +93,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @discussion
  * 默认配置：
  * - personalizedAdEnabled = YES
- * - idfaEnabled = YES
+ * - idfaEnabled = NO（默认关闭，保护用户隐私）
+ * - idfvEnabled = NO（默认关闭，保护用户隐私）
  * - locationEnabled = NO（默认关闭，保护用户隐私）
  */
 + (instancetype)defaultConfig;

@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief SDK 版本号
  * @discussion 格式: 主版本.次版本.修订版本
  */
-static NSString * const HXAdsSDKVersion = @"1.5.10";
+static NSString * const HXAdsSDKVersion = @"1.5.11";
 
 /**
  * @brief SDK 错误域
@@ -68,6 +68,12 @@ typedef NS_ENUM(NSInteger, HXAdsErrorCode) {
      * @discussion 该 AppID 在服务端未注册，请检查后台配置
      */
     HXAdsErrorCodeAppIDNotExist = 1004,
+
+    /**
+     * @brief 当前系统版本不受支持
+     * @discussion SDK 功能需要 iOS 13.0 或更高版本；较低版本会安全地初始化失败
+     */
+    HXAdsErrorCodeUnsupportedOS = 1005,
     
     /**
      * @brief 初始化失败（通用）

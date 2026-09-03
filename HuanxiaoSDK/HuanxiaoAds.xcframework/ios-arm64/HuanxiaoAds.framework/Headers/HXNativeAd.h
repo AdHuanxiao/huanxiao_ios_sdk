@@ -202,6 +202,9 @@ typedef NS_ENUM(NSInteger, HXNativeVideoRenderMode) {
  * 加载广告素材，加载成功后：
  * - 回调 nativeAdDidLoad:
  * - 可通过 adView 属性获取 SDK 渲染好的广告视图
+ *
+ * 每个 HXNativeAd 实例仅支持一次加载。无论加载成功或失败，刷新或重试广告时
+ * 都需要重新创建 HXNativeAd 实例。
  */
 - (void)loadAd;
 
@@ -253,10 +256,12 @@ typedef NS_ENUM(NSInteger, HXNativeVideoRenderMode) {
  * 仅在特殊布局（如复杂 ScrollView 嵌套）导致自动检测失效时使用。
  *
  * 调用条件：
+ * - 广告已加载成功且未失效
+ * - 已通过 bindWithContainer:clickableViews: 绑定有效容器
  * - 广告视图可见面积 >= 50%
  * - 持续可见时间 >= exposureDurationThreshold（默认 0.3 秒）
  *
- * @note 重复调用会被忽略（只上报一次）
+ * @note 请在主线程调用；无效时机和重复调用会被忽略，且只上报一次
  */
 - (void)reportExposureManually;
 
@@ -307,4 +312,3 @@ typedef NS_ENUM(NSInteger, HXNativeVideoRenderMode) {
 @end
 
 NS_ASSUME_NONNULL_END
-

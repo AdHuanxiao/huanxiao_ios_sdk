@@ -33,7 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * @brief 当前 SDK 配置
- * @discussion 初始化成功后可读取，未初始化时为 nil
+ * @discussion 初始化成功后可读取，未初始化时为 nil。SDK 在初始化开始时复制配置，
+ * 后续修改调用方原始 HXAdsConfig 对象不会改变 SDK 内部配置。
  */
 @property (nonatomic, strong, readonly, nullable) HXAdsConfig *currentConfig;
 
@@ -69,6 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 使用默认配置，等同于使用默认 HXAdsConfig 调用 initializeWithConfig:
  * 方法返回后可通过 @c isInitialized 判断是否成功。
  * 内部逻辑（网络重试等）与异步版本完全一致。
+ * iOS 12 上会立即安全返回，@c isInitialized 保持为 NO，不会启动 SDK 业务流程。
  */
 - (void)initializeWithAppID:(NSString *)appID;
 
@@ -117,6 +119,7 @@ NS_ASSUME_NONNULL_BEGIN
  * - 建议在应用启动时（如 AppDelegate 的 didFinishLaunching）调用
  * - 重复调用时，如果已初始化成功则直接返回成功
  * - 初始化过程中会进行网络请求，请确保网络可用
+ * - iOS 12 上会立即回调失败，错误码为 @c HXAdsErrorCodeUnsupportedOS，不会启动 SDK 业务流程
  *
  * @warning AppID 为必填项，为空时将返回错误
  */
@@ -190,11 +193,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * @brief 设置 IDFA
  *
- * @param idfa IDFA 字符串，格式: 00000000-0000-0000-0000-000000000000
+ * @param idfa IDFA UUID 字符串；传入 nil 或空字符串时清空当前值
  *
  * @discussion
  * 如果您的应用已自行获取了 IDFA（通过 ATTrackingManager），可通过此方法传入。
  * SDK 将使用您提供的 IDFA 进行广告请求。
+ * 非 UUID 或全零 UUID 会被忽略，且不会覆盖当前有效值。
  *
  * @note 必须在 SDK 初始化成功后调用，否则设置无效
  *
@@ -217,6 +221,28 @@ NS_ASSUME_NONNULL_BEGIN
  * @return IDFA 字符串，未设置时返回 nil
  */
 - (nullable NSString *)idfa;
+
+#pragma mark - IDFV 管理
+
+/**
+ * @brief 设置 IDFV
+ *
+ * @param idfv IDFV UUID 字符串；传入 nil 或空字符串时清空当前值
+ *
+ * @discussion
+ * 如果媒体已自行获取 IDFV，可通过此方法传入。媒体手动传入的值优先于
+ * SDK 自动获取的值，并且不受 HXPrivacyConfig.idfvEnabled 开关影响。
+ * 非 UUID 或全零 UUID 会被忽略，且不会覆盖当前有效值。
+ *
+ * @note 必须在 SDK 初始化成功后调用，否则设置无效
+ */
+- (void)setIDFV:(nullable NSString *)idfv;
+
+/**
+ * @brief 获取当前有效的 IDFV
+ * @return IDFV 字符串，未设置或不允许使用自动值时返回 nil
+ */
+- (nullable NSString *)idfv;
 
 #pragma mark - 日志控制
 
