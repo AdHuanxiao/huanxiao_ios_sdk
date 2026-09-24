@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @brief SDK 版本号
  * @discussion 格式: 主版本.次版本.修订版本
  */
-static NSString * const HXAdsSDKVersion = @"1.5.11";
+static NSString * const HXAdsSDKVersion = @"1.6.0";
 
 /**
  * @brief SDK 错误域
@@ -174,6 +174,15 @@ typedef NS_ENUM(NSInteger, HXAdsErrorCode) {
      * @discussion 返回的广告类型与请求的广告位类型不一致
      */
     HXAdsErrorCodeAdTypeMismatch = 3010,
+
+    /// 服务端广告渲染类型无效（is_unified 只能为 0 或 1）。
+    HXAdsErrorCodeRenderModeInvalid = 3014,
+    /// Banner 适配只接受原生信息流自渲染广告。
+    HXAdsErrorCodeNativeCustomRequired = 3015,
+    /// 聚合开屏、插屏适配只接受模板广告。
+    HXAdsErrorCodeTemplateRequired = 3016,
+    /// 行为激励必须由服务端下发自渲染广告。
+    HXAdsErrorCodeRewardRenderModeMismatch = 3017,
     
     /**
      * @brief 内部错误

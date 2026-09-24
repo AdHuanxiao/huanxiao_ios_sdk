@@ -9,13 +9,29 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <HuanxiaoAds/HXAdMaterialInfo.h>
 #import <HuanxiaoAds/HXSplashAdDelegate.h>
 #import <HuanxiaoAds/HXBidNotifiable.h>
+#import <HuanxiaoAds/HXFullscreenAdRenderData.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 
 @interface HXSplashAd : NSObject <HXBidNotifiable>
+
+/// 加载成功后可读取的素材快照；加载前及本轮加载失败时为 nil。
+/// 被拒绝的重复加载、广告关闭或过期不会清除已成功加载的快照。
+@property (atomic, strong, readonly, nullable) HXAdMaterialInfo *materialInfo;
+
+/// 服务端决定的渲染方式，仅加载成功后有效；媒体不能设置。
+/// 自渲染须先绑定素材；自动展示时请在加载成功回调内同步绑定。
+@property (nonatomic, assign, readonly) HXFullscreenAdRenderMode renderMode;
+
+/// 自渲染素材，仅 Custom 模式加载成功后有效。
+/// 在主线程创建内容视图并 bindWithContainer，再调用现有 show 方法。
+/// SDK 管理曝光、交互、视频和关闭；绑定本身不开始展示。
+@property (nonatomic, strong, readonly, nullable) HXFullscreenAdRenderData *renderData;
+
 
 #pragma mark - 属性
 

@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 使用默认配置，等同于使用默认 HXAdsConfig 调用 initializeWithConfig:
  * 方法返回后可通过 @c isInitialized 判断是否成功。
  * 内部逻辑（网络重试等）与异步版本完全一致。
- * iOS 12 上会立即安全返回，@c isInitialized 保持为 NO，不会启动 SDK 业务流程。
+ * iOS 10～12 上会立即安全返回，@c isInitialized 保持为 NO，不会启动 SDK 业务流程。
  */
 - (void)initializeWithAppID:(NSString *)appID;
 
@@ -119,7 +119,7 @@ NS_ASSUME_NONNULL_BEGIN
  * - 建议在应用启动时（如 AppDelegate 的 didFinishLaunching）调用
  * - 重复调用时，如果已初始化成功则直接返回成功
  * - 初始化过程中会进行网络请求，请确保网络可用
- * - iOS 12 上会立即回调失败，错误码为 @c HXAdsErrorCodeUnsupportedOS，不会启动 SDK 业务流程
+ * - iOS 10～12 上会立即回调失败，错误码为 @c HXAdsErrorCodeUnsupportedOS，不会启动 SDK 业务流程
  *
  * @warning AppID 为必填项，为空时将返回错误
  */

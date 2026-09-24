@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <HuanxiaoAds/HXAdMaterialInfo.h>
 #import <HuanxiaoAds/HXNativeAdDelegate.h>
 #import <HuanxiaoAds/HXNativeAdRenderData.h>
 #import <HuanxiaoAds/HXMediaView.h>
@@ -80,6 +81,10 @@ typedef NS_ENUM(NSInteger, HXNativeVideoRenderMode) {
 
 @interface HXNativeAd : NSObject <HXBidNotifiable>
 
+/// 加载成功后可读取的素材快照；加载前及本轮加载失败时为 nil。
+/// 被拒绝的重复加载、广告关闭或过期不会清除已成功加载的快照。
+@property (atomic, strong, readonly, nullable) HXAdMaterialInfo *materialInfo;
+
 #pragma mark - 属性
 
 /**
@@ -121,13 +126,12 @@ typedef NS_ENUM(NSInteger, HXNativeVideoRenderMode) {
  * @brief 渲染模式
  *
  * @discussion
- * 必须在调用 loadAd 之前设置。
- * - HXNativeAdRenderModeTemplate（默认）：SDK 渲染 UI，通过 adView 获取
+ * 由本次广告的服务端 is_unified 字段决定，仅在加载成功后查询。
+ * - HXNativeAdRenderModeTemplate：SDK 渲染 UI，通过 adView 获取
  * - HXNativeAdRenderModeCustom：媒体自渲染，通过 renderData 获取数据
- *
- * @default HXNativeAdRenderModeTemplate
+ * 媒体不能指定模式，须在 nativeAdDidLoad: 中按实际结果处理。
  */
-@property (nonatomic, assign) HXNativeAdRenderMode renderMode;
+@property (nonatomic, assign, readonly) HXNativeAdRenderMode renderMode;
 
 /**
  * @brief 视频渲染方式（仅自渲染模式有效）
@@ -148,7 +152,7 @@ typedef NS_ENUM(NSInteger, HXNativeVideoRenderMode) {
  *
  * @discussion
  * 开启后，广告请求会携带 actReward=1 参数。
- * 服务端返回的广告仅支持自渲染（SDK 会强制切换 renderMode 为 Custom），
+ * 服务端必须返回自渲染广告（is_unified = 1，否则加载失败），
  * 且不支持摇/扭/滑交互，仅支持点击跳转。
  *
  * 用户点击广告跳转后返回时，SDK 会判断累计浏览时长是否达标，

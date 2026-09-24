@@ -9,12 +9,17 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <HuanxiaoAds/HXAdMaterialInfo.h>
 #import <HuanxiaoAds/HXRewardVideoAdDelegate.h>
 #import <HuanxiaoAds/HXBidNotifiable.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HXRewardVideoAd : NSObject <HXBidNotifiable>
+
+/// 加载成功后可读取的素材快照；加载前及本轮加载失败时为 nil。
+/// 被拒绝的重复加载、广告关闭或过期不会清除已成功加载的快照。
+@property (atomic, strong, readonly, nullable) HXAdMaterialInfo *materialInfo;
 
 #pragma mark - 属性
 

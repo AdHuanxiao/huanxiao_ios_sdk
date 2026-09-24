@@ -66,13 +66,14 @@ NS_ASSUME_NONNULL_BEGIN
 //  广告素材高
 @property (nonatomic, assign, readonly) NSInteger height;
 //  由于广告法规定，必须添加广告标识（建议：广告标识放置在广告的左下角，logo放置在广告的右下角）
-//  广告标识图片
+/// 完整广告标识图片（已经包含所需文字）。优先显示；不要再叠加 adLabel。
+/// 服务端隐藏 Logo 或图片缺失时返回仅含“广告”的图片。
 @property (nonatomic, strong, readonly, nullable) UIImage *adLabelImage;
-//  广告标识文字
+/// adLabelImage 无法生成时的文字兜底，与 adLabelImage 二选一。
 @property (nonatomic, copy, readonly) NSString *adLabel;
-//  logo图片
+/// 按构建配置返回的原始角标图；和 logoLabel 配合显示。服务端隐藏 Logo 时为 nil。
 @property (nonatomic, strong, readonly, nullable) UIImage *logoImage;
-//  logo文字
+/// 完整图片模式成功时为空字符串；纯 Logo 模式或没有图片时为“广告”。
 @property (nonatomic, copy, readonly, nullable) NSString *logoLabel;
 //  广告图标URL
 @property (nonatomic, copy, readonly, nullable) NSString *iconUrl;
