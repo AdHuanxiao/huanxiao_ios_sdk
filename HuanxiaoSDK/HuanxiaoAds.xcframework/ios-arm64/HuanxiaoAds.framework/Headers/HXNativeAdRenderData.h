@@ -53,9 +53,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *ctaText;
 //  广告标题
 @property (nonatomic, copy, readonly) NSString *title;
-//  广告图片素材
+//  已有缓存的广告图片；未缓存时为空，加载成功不等待图片下载。
 @property (nonatomic, strong, readonly) NSArray *images;
-//  广告图片素材URL
+//  广告图片素材 URL；images 为空时由媒体按 URL 异步加载。
 @property (nonatomic, strong, readonly) NSArray<NSString *> *imageUrls;
 //  广告文字素材
 @property (nonatomic, strong, readonly) NSArray *texts;

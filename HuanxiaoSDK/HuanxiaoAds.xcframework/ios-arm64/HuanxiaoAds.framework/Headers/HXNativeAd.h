@@ -244,7 +244,7 @@ typedef NS_ENUM(NSInteger, HXNativeVideoRenderMode) {
  *
  * 数据包含：
  * - 文本信息（标题、描述、按钮文案）
- * - 已加载的图片（mainImage、iconImage）
+ * - 图片 URL 和已有缓存图片（未缓存时图片可为空，由媒体按 URL 异步加载）
  * - 交互类型和提示
  * - 视频信息（如果是视频广告）
  *
